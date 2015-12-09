@@ -8,7 +8,7 @@
         <scene sceneID="JXW-Z8-XAg">
             <objects>
                 <tableViewController storyboardIdentifier="notesListView" title="Table View Controller" id="p20-c2-Mwn" customClass="NotesViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="145" sectionHeaderHeight="22" sectionFooterHeight="22" id="nXQ-M8-xda">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="145" sectionHeaderHeight="22" sectionFooterHeight="22" id="nXQ-M8-xda">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -25,14 +25,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" editable="NO" text="Lorem ipsum dolor " translatesAutoresizingMaskIntoConstraints="NO" id="lW1-jZ-KyG">
-                                            <rect key="frame" x="20" y="37" width="560" height="95"/>
+                                            <rect key="frame" x="20" y="37" width="560" height="96"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                         </textView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQc-l7-Zlp">
-                                            <rect key="frame" x="522" y="101" width="25" height="25"/>
+                                            <rect key="frame" x="522" y="102" width="25" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="7rF-bd-zYA"/>
                                                 <constraint firstAttribute="width" constant="25" id="u47-Cu-INo"/>
@@ -47,7 +47,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KM6-yO-mFD">
-                                            <rect key="frame" x="552" y="101" width="25" height="25"/>
+                                            <rect key="frame" x="552" y="102" width="25" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="25" id="7Ar-ye-drT"/>
                                                 <constraint firstAttribute="height" constant="25" id="Oyp-8H-iUh"/>
@@ -62,7 +62,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4mn-ue-w8g">
-                                            <rect key="frame" x="492" y="101" width="25" height="25"/>
+                                            <rect key="frame" x="492" y="102" width="25" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="0Ye-4I-Js7"/>
                                                 <constraint firstAttribute="width" constant="25" id="aYr-m0-hZj"/>

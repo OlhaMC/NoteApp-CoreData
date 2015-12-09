@@ -16,6 +16,8 @@
 @interface NotesViewController ()
 
 @property (strong, nonatomic) NSMutableArray * notesArray;
+@property (strong, nonatomic) UISearchController *noteSearchController;
+@property (strong, nonatomic) NSArray *filteredNotesArray;
 
 @end
 
@@ -29,8 +31,23 @@ static NSString * const identifier = @"cell";
 
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-  // CoreDataController * coreDataManager = [CoreDataController sharedInstance];
-   // NSLog(@"%@",[coreDataManager applicationDocumentsDirectory]);
+    self.noteSearchController = [[UISearchController alloc]initWithSearchResultsController:nil];
+    self.noteSearchController.searchResultsUpdater = self;
+    self.noteSearchController.searchBar.delegate = self;
+    self.noteSearchController.dimsBackgroundDuringPresentation = NO;
+    
+    self.tableView.tableHeaderView = self.noteSearchController.searchBar;
+    [self.noteSearchController.searchBar sizeToFit];
+//    self.noteSearchController.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+//    self.noteSearchController.navigationController.navigationBar.barTintColor =
+//                                self.navigationController.navigationBar.barTintColor;
+    self.noteSearchController.searchBar.tintColor = [UIColor whiteColor];
+    self.noteSearchController.searchBar.barTintColor =
+                                self.navigationController.navigationBar.barTintColor;
+    self.definesPresentationContext = YES;
+    
+    // CoreDataController * coreDataManager = [CoreDataController sharedInstance];
+    //NSLog(@"%@",[coreDataManager applicationDocumentsDirectory]);
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -76,7 +93,7 @@ static NSString * const identifier = @"cell";
         NSLog(@"Can't delete photo - %@ %@", error, [error localizedDescription]);
     }
 
-   // NSLog(@"Photo array after relashions verification ------ %ld", photoArray.count);
+    //NSLog(@"Photo array after relashions verification ------ %ld", photoArray.count);
 }
 
 - (void) verifyFirstNote
@@ -103,11 +120,40 @@ static NSString * const identifier = @"cell";
     self.notesArray = [sortedArray mutableCopy];
 }
 
+#pragma mark - UISearchResultsUpdating
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchString = searchController.searchBar.text;
+    [self searchForText:searchString];
+    [self.tableView reloadData];
+}
+
+- (void)searchForText:(NSString*)searchString {
+    
+    NSString *trimmedString =
+    [searchString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSArray *searchWordsArray =
+    [[NSArray alloc] initWithArray:[trimmedString componentsSeparatedByString:@" "]];
+    
+    NSMutableArray *subpredicatesArray = [NSMutableArray array];
+    for (NSString *word in searchWordsArray) {
+        NSPredicate *itemPredicate = [NSPredicate predicateWithFormat:@"textDescription contains[cd] %@",word];
+        [subpredicatesArray addObject:itemPredicate];
+    }
+    
+    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:subpredicatesArray];
+    NSArray *filteredArray = [self.notesArray filteredArrayUsingPredicate:compoundPredicate];
+    self.filteredNotesArray = filteredArray;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.notesArray.count;
+    if (self.noteSearchController.active) {
+        return self.filteredNotesArray.count;
+    } else {
+        return self.notesArray.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -130,7 +176,12 @@ static NSString * const identifier = @"cell";
 }
 - (void)configureNoteCell:(NoteViewCell*)cell atIndexPath: (NSIndexPath*)indexPath
 {
-    NoteObject * newNote = [self.notesArray objectAtIndex:indexPath.row];
+    NoteObject *newNote;
+    if (self.noteSearchController.active) {
+        newNote = [self.filteredNotesArray objectAtIndex:indexPath.row];
+    } else {
+        newNote = [self.notesArray objectAtIndex:indexPath.row];
+    }
     cell.noteTextView.text = newNote.textDescription;
     cell.noteTextView.textAlignment = NSTextAlignmentJustified;
     
